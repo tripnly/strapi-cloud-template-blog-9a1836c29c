@@ -1,18 +1,34 @@
 // config/middlewares.js
+// config/middlewares.js
 module.exports = [
   'strapi::errors',
 
-  // Hardened CSP so images/media and API requests work from your site
+  // Security + CSP so Google Maps tiles/scripts work inside the Strapi Admin
   {
     name: 'strapi::security',
     config: {
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
+          // allow outgoing API calls
           'connect-src': ["'self'", 'https:', 'http:'],
-          'img-src': ["'self'", 'data:', 'blob:', 'https:', 'http:'],
-          'media-src': ["'self'", 'data:', 'blob:', 'https:', 'http:'],
-          // Let Strapi send resources to http(s) without forcing upgrade
+          // allow Google Maps scripts in the admin UI
+          'script-src': ["'self'", "'unsafe-inline'", 'https://maps.googleapis.com'],
+          // images (include Google Maps tile domains)
+          'img-src': [
+            "'self'", 'data:', 'blob:', 'https:', 'http:',
+            'https://maps.gstatic.com', 'https://maps.googleapis.com',
+            'https://khm.google.com', 'https://khm0.google.com', 'https://khm1.google.com',
+            'https://khms0.google.com', 'https://khms1.google.com', 'https://khms2.google.com', 'https://khms3.google.com',
+            'https://streetviewpixels-pa.googleapis.com',
+            'https://market-assets.strapi.io'
+          ],
+          // media (video tiles, etc.)
+          'media-src': [
+            "'self'", 'data:', 'blob:', 'https:', 'http:',
+            'https://maps.gstatic.com', 'https://maps.googleapis.com'
+          ],
+          // do not force upgrade (keeps http allowed when needed)
           upgradeInsecureRequests: null,
         },
       },
@@ -26,6 +42,7 @@ module.exports = [
       enabled: true,
       origin: [
         'http://localhost:5173',
+        'http://localhost:5175',
         'https://lisboacitypass.tripnly.com',
       ],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
