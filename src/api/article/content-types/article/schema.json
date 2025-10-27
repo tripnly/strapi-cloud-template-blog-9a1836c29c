@@ -44,6 +44,11 @@
     "blocks": {
       "type": "dynamiczone",
       "components": ["shared.media", "shared.quote", "shared.rich-text", "shared.slider"]
+    },
+    "location": {
+      "type": "customField",
+      "customField": "plugin::google-maps.location",
+      "options": { "lat": true, "lng": true, "address": true }
     }
   }
 }
