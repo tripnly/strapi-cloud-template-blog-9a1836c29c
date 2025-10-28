@@ -51,9 +51,8 @@
       ]
     },
 
-    /* --- Map fields (root) --- */
     "address": { "type": "string" },
-    "lat":     { "type": "decimal" },
-    "lng":     { "type": "decimal" }
+    "lat": { "type": "decimal" },
+    "lng": { "type": "decimal" }
   }
 }
