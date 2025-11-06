@@ -12,18 +12,27 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
-      "type": "string"
-    },
+    "name": { "type": "string", "required": false },
+
+    "bio":   { "type": "text" },
+    "role":  { "type": "string" },
+
     "avatar": {
       "type": "media",
       "multiple": false,
       "required": false,
       "allowedTypes": ["images", "files", "videos"]
     },
-    "email": {
-      "type": "string"
-    },
+
+    "email": { "type": "string" },
+
+    "twitter":   { "type": "string" },
+    "x":         { "type": "string" },
+    "instagram": { "type": "string" },
+    "linkedin":  { "type": "string" },
+    "facebook":  { "type": "string" },
+    "website":   { "type": "string" },
+
     "articles": {
       "type": "relation",
       "relation": "oneToMany",

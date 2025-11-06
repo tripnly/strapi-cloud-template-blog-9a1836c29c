@@ -1,5 +1,5 @@
 // config/middlewares.js
-// config/middlewares.js
+
 module.exports = [
   'strapi::errors',
 
@@ -21,12 +21,16 @@ module.exports = [
             'https://khm.google.com', 'https://khm0.google.com', 'https://khm1.google.com',
             'https://khms0.google.com', 'https://khms1.google.com', 'https://khms2.google.com', 'https://khms3.google.com',
             'https://streetviewpixels-pa.googleapis.com',
-            'https://market-assets.strapi.io'
+            'https://market-assets.strapi.io',
           ],
           // media (video tiles, etc.)
           'media-src': [
             "'self'", 'data:', 'blob:', 'https:', 'http:',
-            'https://maps.gstatic.com', 'https://maps.googleapis.com'
+            'https://maps.gstatic.com', 'https://maps.googleapis.com',
+          ],
+          // if you embed Google Maps iframes anywhere
+          'frame-src': [
+            "'self'", 'https://www.google.com', 'https://maps.google.com',
           ],
           // do not force upgrade (keeps http allowed when needed)
           upgradeInsecureRequests: null,
@@ -39,14 +43,16 @@ module.exports = [
   {
     name: 'strapi::cors',
     config: {
-      enabled: true,
       origin: [
         'http://localhost:5173',
         'http://localhost:5175',
-        'https://lisboacitypass.tripnly.com',
+        'https://lisboncard-tripnly.web.app',       // Firebase Hosting
+        'https://lisboacitypass.tripnly.com',       // Custom domain
+        'https://lisboncard-tripnly.firebaseapp.com', // Optional fallback
       ],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-      headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
+      // Be explicit so preflight accepts Authorization and common browser headers
+      headers: ['Content-Type', 'Authorization', 'Origin', 'Accept', 'X-Requested-With'],
       credentials: true,
       keepHeaderOnError: true,
     },
